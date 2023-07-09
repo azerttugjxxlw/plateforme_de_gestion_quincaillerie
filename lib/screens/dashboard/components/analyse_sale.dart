@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+
 import '../../../core/constants/color_constants.dart';
 
 class AnalyseSale extends StatelessWidget {

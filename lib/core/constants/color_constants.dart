@@ -1,16 +1,18 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../screens/dashboard/dashboard_screen.dart';
 
 
 const primaryColor = Color(0xFFCDDDFF);
-const secondaryColor = Color(0xFF05011E);
+const secondaryColor = const Color.fromRGBO(11, 6, 65, 1);
 const kdashdcolor = Color(0xFFFFFFFF);
 final dashdTextStyle = TextStyle(color: Colors.white,fontSize: 16);
 final drawaTextStyle = TextStyle(color: Color(0xFF05011E),fontSize: 16);
 final dashdTextaStyle = TextStyle(color: Colors.black,fontSize: 16);
+final columnTextStyle = GoogleFonts.josefinSans(textStyle: TextStyle(color: Colors.white));
 Widget currentPage = DashboardScreen();
 //const bgColor = Color(0xFF212132);
 const kelementdashColor = Color(0xFFF1EAE3);
@@ -20,7 +22,7 @@ const kTextLightColor = Color(0xFF747474);
 const kbagColor = Color(0xFFE9E9F3);
 const kSecondaryColorB = Color(0xFF8B94BC);
 const kTranspColor = Colors.transparent;
-const kGreenColor = Color(0xFF6AC259);
+
 const kRedColor = Color(0xFFE92E30);
 const kGrayColor = Color(0xFFC1C1C1);
 const kBlackColor = Color(0xFF101010);

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../core/constants/color_constants.dart';
 import '../../responsive.dart';
+import '../client/client.dart';
 import '../dashboard/dashboard_screen.dart';
+import '../facture/facture.dart';
+import '../stock/stock.dart';
 import '../ventes/ventes.dart';
 import 'components/side_menu.dart';
 
@@ -45,8 +48,6 @@ class _HomeScreen extends State<HomeScreen> {
                                 ),
                                 Image.asset(
                                   "assets/images/logo.png",
-
-
                                   scale: 7,
                                 ),
                                 SizedBox(
@@ -57,7 +58,7 @@ class _HomeScreen extends State<HomeScreen> {
                             )),
                         DrawerListTile(
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/tableaudebore.png") ,),
+                              leading:ImageIcon(AssetImage("assets/icon/tableaudebore.png"), color:selectedGender== Gender.Tableaudebore? secondaryColor : kdashdcolor,),
                               title:Text( "Tableau de bord",style:selectedGender== Gender.Tableaudebore? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
@@ -69,13 +70,12 @@ class _HomeScreen extends State<HomeScreen> {
                             setState(() {
                               selectedGender = Gender.Tableaudebore;
                               currentPage = DashboardScreen();
-                              print("D");
                             });
                           },
                         ),
                         DrawerListTile(
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/ventes.png") ,),
+                              leading:ImageIcon(AssetImage("assets/icon/ventes.png"),color:selectedGender== Gender.Ventes? secondaryColor : kdashdcolor,),
                               title:Text( "Ventes",style:selectedGender== Gender.Ventes? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
@@ -85,17 +85,13 @@ class _HomeScreen extends State<HomeScreen> {
                           onPress: () {
                             setState(() {
                               selectedGender = Gender.Ventes;
-
                               currentPage = Ventes();
-
-                              print("vente");
-
                             });
                           },
                         ),
                         DrawerListTile(
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/facture.png") ,),
+                              leading:ImageIcon(AssetImage("assets/icon/facture.png"),color:selectedGender== Gender.Facture? secondaryColor : kdashdcolor,),
                               title:Text( "Facture",style:selectedGender== Gender.Facture? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
@@ -105,15 +101,13 @@ class _HomeScreen extends State<HomeScreen> {
                           onPress: () {
                             setState(() {
                               selectedGender = Gender.Facture;
-                              // currentPage = Facture();
-                              print("factur");
-
+                              currentPage = Facture();
                             });
                           },
                         ),
                         DrawerListTile(
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/stock.png") ,),
+                              leading:ImageIcon(AssetImage("assets/icon/stock.png"),color:selectedGender== Gender.Stock? secondaryColor : kdashdcolor,),
                               title:Text( "Stocks",style:selectedGender== Gender.Stock? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
@@ -124,15 +118,13 @@ class _HomeScreen extends State<HomeScreen> {
                           onPress: () {
                             setState(() {
                               selectedGender = Gender.Stock;
-                              // currentPage = Stock();
-                              print("stock");
-
+                              currentPage = Stock();
                             });
                           },
                         ),
                         DrawerListTile(
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/client.png") ,),
+                              leading:ImageIcon(AssetImage("assets/icon/client.png"),color:selectedGender== Gender.client? secondaryColor : kdashdcolor,),
                               title:Text( "Client",style:selectedGender== Gender.client? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
@@ -142,9 +134,7 @@ class _HomeScreen extends State<HomeScreen> {
                           onPress: () {
                             setState(() {
                               selectedGender = Gender.client;
-                              // currentPage = Client();
-                              print("client");
-
+                               currentPage = Client();
                             });
                           },
                         ),
@@ -157,12 +147,11 @@ class _HomeScreen extends State<HomeScreen> {
                             setState(() {
                               selectedGender = Gender.Parametres;
                               // currentPage = Parametre();
-                              print("parametre");
-
                             });},
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/parametre.png") ,),
-                              title:Text( "Paramètres")
+                              leading:ImageIcon(AssetImage("assets/icon/parametre.png"),color:selectedGender== Gender.Parametres? secondaryColor : kdashdcolor,),
+                              title:Text( "Paramètres",style:selectedGender== Gender.client? drawaTextStyle
+                                  : dashdTextStyle,)
                           ),
                         ),
                       ],
