@@ -33,6 +33,8 @@ dependencies:
   http: ^1.1.0
   fluttertoast: ^8.2.2
   syncfusion_flutter_datagrid: ^22.1.37
+  toggle_switch: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:plateforme_de_gestion_quincaillerie/screens/dashboard/dashboard_screen.dart';
-import 'package:plateforme_de_gestion_quincaillerie/screens/ventes/ventes.dart';
 
 
-import '../../../core/constants/color_constants.dart';
+
+
 /*enum Gender { client, Tableaudebore, Ventes, Facture, Stock, Parametres}
 
 class SideMenu extends StatefulWidget {

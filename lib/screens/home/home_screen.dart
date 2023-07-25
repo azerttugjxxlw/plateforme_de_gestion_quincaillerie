@@ -7,7 +7,8 @@ import '../client/client.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../facture/facture.dart';
 import '../stock/stock.dart';
-import '../ventes/ventes.dart';
+import '../ventes/vente.dart';
+
 import 'components/side_menu.dart';
 
 class HomeScreen extends StatefulWidget {

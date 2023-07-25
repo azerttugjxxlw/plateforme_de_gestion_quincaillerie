@@ -9,16 +9,16 @@ import '../../api_connection/api_connection.dart';
 import '../../core/constants/color_constants.dart';
 
 
-class ArticleList extends StatefulWidget {
+class VentesList extends StatefulWidget {
   @override
-  _ArticleListState createState() => _ArticleListState();
+  _VentesListState createState() => _VentesListState();
 }
-class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin {
+class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
   late AnimationController _controller;
 
    @override
    Future<List<dynamic>>getArticle() async{
-    final response = await http.get(Uri.parse(API.listarticleapi));
+    final response = await http.get(Uri.parse(API.listfactureapi));
     var list = json.decode(response.body);
 
 
@@ -69,7 +69,7 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
                     DataColumn(
                       label: Text(
-                        "Etat",
+                        "Date",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -77,7 +77,7 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
                     DataColumn(
                       label: Text(
-                        "Prix UP",
+                        "Prix T",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -85,7 +85,7 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
                     DataColumn(
                       label: Text(
-                        "QTE",
+                        "TVA",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -93,7 +93,7 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
                     DataColumn(
                       label: Text(
-                        "Description",
+                        "Remise",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -101,7 +101,7 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
                     DataColumn(
                       label: Text(
-                        "categorie ",
+                        "Bon ",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -121,13 +121,13 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                                 241, 234, 227, 1); //make tha magic!
                           }),
                           cells: [
-                            DataCell(Text(data[i]['id_article'].toString())),
-                            DataCell(Text(data[i]['Nom_article'].toString())),
-                            DataCell(Text(data[i]['etat_article'].toString())),
-                            DataCell(Text(data[i]['prix_up'].toString())),
-                            DataCell(Text(data[i]['qteStock'].toString())),
-                            DataCell(Text(data[i]['description'].toString())),
-                            DataCell(Text(data[i]['categorie'].toString())),
+                            DataCell(Text(data[i]['id_facture'].toString())),
+                            DataCell(Text(data[i]['nom_client'].toString())),
+                            DataCell(Text(data[i]['date_facture'].toString())),
+                            DataCell(Text(data[i]['prix'].toString())),
+                            DataCell(Text(data[i]['tva'].toString())),
+                            DataCell(Text(data[i]['remise_facture'].toString())),
+                            DataCell(Text(data[i]['bon'].toString())),
 
                           ]
                       ),

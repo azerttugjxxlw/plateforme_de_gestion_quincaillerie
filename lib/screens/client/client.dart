@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../core/constants/color_constants.dart';
+import 'client_list.dart';
 
 class Client extends StatefulWidget {
   const Client({Key? key}) : super(key: key);
@@ -101,7 +102,7 @@ class _ClientState extends State<Client> {
         //  const DateScreen(),
           Impression(reload),
           SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
-         // ClientList(),
+          ClientList(),
         ],
       ),
     );

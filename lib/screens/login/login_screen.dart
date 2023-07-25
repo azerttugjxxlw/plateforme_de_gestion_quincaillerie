@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:plateforme_de_gestion_quincaillerie/api_connection/api_connection.dart';
+import 'package:plateforme_de_gestion_quincaillerie/core/constants/color_constants.dart';
 
+import '../../core/constants/color_constants.dart';
+import '../../core/constants/color_constants.dart';
 import '../../model/employer.dart';
+import '../../responsive.dart';
 import '../home/home_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -106,138 +110,147 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       //color set to transperent or set your own color
     ));
 
-    return Scaffold(
-      body: SingleChildScrollView(
-          child:Container(
-            constraints: BoxConstraints(
-                minHeight:MediaQuery.of(context).size.height
-              //set minimum height equal to 100% of VH
-            ),
-            width:MediaQuery.of(context).size.width,
-            //make width of outer wrapper to 100%
-            decoration:BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [ Colors.orange,Colors.deepOrangeAccent,
-                  Colors.red, Colors.redAccent,
-                ],
-              ),
-            ), //show linear gradient background of page
-
-            padding: EdgeInsets.all(20),
-            child:Column(children:<Widget>[
-
-              Container(
-                margin: EdgeInsets.only(top:80),
-                child: Text("Sign Into System", style: TextStyle(
-                    color:Colors.white,fontSize: 40, fontWeight: FontWeight.bold
-                ),), //title text
-              ),
-
-              Container(
-                margin: EdgeInsets.only(top:10),
-                child: Text("Sign In using Email and Password", style: TextStyle(
-                    color:Colors.white,fontSize: 15
-                ),), //subtitle text
-              ),
-
-              Container(
-                //show error message here
-                margin: EdgeInsets.only(top:30),
-                padding: EdgeInsets.all(10),
-                child:error? errmsg(errormsg):Container(),
-                //if error == true then show error message
-                //else set empty container as child
-              ),
-
-              Container(
-                padding: EdgeInsets.fromLTRB(10,0,10,0),
-                margin: EdgeInsets.only(top:10),
-                child: TextField(
-                  controller: _username, //set username controller
-                  style:TextStyle(color:Colors.orange[100], fontSize:20),
-                  decoration: myInputDecoration(
-                    label: "Username",
-                    icon: Icons.person,
-                  ),
-                  onChanged: (value){
-                    //set username  text on change
-                    username = value;
-                  },
-
+    return  Scaffold(
+      backgroundColor: Colors.blueGrey[50],
+      body: Stack(
+        fit: StackFit.loose,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              if (Responsive.isDesktop(context))
+                Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width / 2,
+                    color: Colors.white,
+                    child: Image.asset('assets/images/mockup-2.png')
                 ),
-              ),
-
               Container(
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                  controller: _password, //set password controller
-                  style: TextStyle(color:Colors.orange[100], fontSize:20),
-                  obscureText: true,
-                  decoration: myInputDecoration(
-                    label: "Password",
-                    icon: Icons.lock,
-                  ),
-                  onChanged: (value){
-                    // change password text
-                    password = value;
-                  },
-
-                ),
-              ),
-
-              Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(top:20),
-                child: SizedBox(
-                  height: 60, width: double.infinity,
-                  child:ElevatedButton(
-                    onPressed: (){
-                      setState(() {
-                        //show progress indicator on click
-                        showprogress = true;
-                      });
-                      startLogin();
-
-                    },
-                    child: showprogress?
-                    SizedBox(
-                      height:30, width:30,
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.orange[100],
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrangeAccent),
+                height: MediaQuery.of(context).size.height,
+                width: Responsive.isDesktop(context)?  MediaQuery.of(context).size.width / 2:MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: Center(
+                  child: Card(
+                    //elevation: 5,
+                    color: Colors.white,
+                    child: Container(
+                      padding: EdgeInsets.all(42),
+                      width: Responsive.isDesktop(context)? MediaQuery.of(context).size.width / 3.6:MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 1.2,
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset("assets/images/logo.png", scale: 3),
+                          SizedBox(height: 10.0),
+                          Flexible(
+                            child: Stack(
+                                fit: StackFit.loose,
+                                clipBehavior: Clip.none,
+                                children: [
+                                  _formLogin(),
+                                ]),
+                          ),
+                        ],
                       ),
-                    ):Text("LOGIN NOW", style: TextStyle(fontSize: 20),),
-                    // if showprogress == true then show progress indicator
-                    // else show "LOGIN NOW" text
-
+                    ),
                   ),
-                ),
-              ),
-
-              Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(top:20),
-                child: InkResponse(
-                    onTap:(){
-                      //action on tap
-                    },
-                    child:Text("Forgot Password? Troubleshoot",
-                      style: TextStyle(color:Colors.white, fontSize:18),
-                    )
                 ),
               )
-            ]),
-          )
+            ],
+          ),
+        ],
       ),
     );
   }
+/////////////////////////////////////////////////////////////////////////////
 
+  Widget _formLogin() {
+
+    return Column(children:<Widget>[
+            Container(
+              //show error message here
+              margin: EdgeInsets.only(top:20),
+              padding: EdgeInsets.all(10),
+              child:error? errmsg(errormsg):Container(),
+              //if error == true then show error message
+              //else set empty container as child
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(10,0,10,0),
+              margin: EdgeInsets.only(top:10),
+              child: TextField(
+                controller: _username, //set username controller
+                style:TextStyle(color:Colors.orange[100], fontSize:20),
+                decoration: myInputDecoration(
+                  label: "Nom",
+                  icon: Icons.person,
+                ),
+                onChanged: (value){
+                  //set username  text on change
+                  username = value;
+                },
+
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: _password, //set password controller
+                style: TextStyle(color:Colors.white, fontSize:20),
+                obscureText: true,
+                decoration: myInputDecoration(
+                  label: "Password",
+                  icon: Icons.lock,
+                ),
+                onChanged: (value){
+                  // change password text
+                  password = value;
+                },
+
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(top:20),
+              child: SizedBox(
+                height: 60, width: double.infinity,
+                child:ElevatedButton(
+                  onPressed: (){
+                    setState(() {
+                      //show progress indicator on click
+                      showprogress = true;
+                    });
+                    startLogin();
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.deepPurple,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: showprogress?
+                  SizedBox(
+                    height:10, width:30,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    ),
+                  ):Text("LOGIN NOW", style: TextStyle(fontSize: 20),),
+                ),
+              ),
+            ),
+
+
+          ]);
+  }
+  ///////////////////////////////////////////////////////////////////////////////
   InputDecoration myInputDecoration({required String label, required IconData icon}){
     return InputDecoration(
       hintText: label, //show label as placeholder
-      hintStyle: TextStyle(color:Colors.orange[100], fontSize:20), //hint text style
+      hintStyle: TextStyle(color:Colors.white, fontSize:20), //hint text style
       prefixIcon: Padding(
           padding: EdgeInsets.only(left:20, right:10),
           child:Icon(icon, color: Colors.orange[100],)
@@ -252,10 +265,10 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color:Colors.orange[200]!, width: 1)
+          borderSide: BorderSide(color:Colors.white!, width: 1)
       ), //focus border
 
-      fillColor: Color.fromRGBO(251,140,0, 0.5),
+      fillColor:secondaryColor,
       filled: true, //set true if you want to show input background
     );
   }
@@ -267,8 +280,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
       margin: EdgeInsets.only(bottom: 10.00),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.red,
-          border: Border.all(color:Colors.red[300]!, width:2)
+          color:secondaryColor,
+          border: Border.all(color:Colors.red!, width:2)
       ),
       child: Row(children: <Widget>[
         Container(
@@ -282,3 +295,4 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     );
   }
 }
+
