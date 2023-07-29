@@ -125,7 +125,7 @@ class _StockState extends State<Stock> {
 
             SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
             Container(
-              height: MediaQuery.of(context).size.height *0.7,
+              height: MediaQuery.of(context).size.height *0.77,
                 child:  ArticleList(),
             ),
           ],

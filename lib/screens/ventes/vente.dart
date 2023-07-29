@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
@@ -17,9 +19,11 @@ String selectedValue = "B1";
 TextEditingController nom_client = TextEditingController();
 TextEditingController prix_up  = TextEditingController();
 TextEditingController prenom_client = TextEditingController();
+TextEditingController remise = TextEditingController();
 TextEditingController num = TextEditingController();
-TextEditingController categorie= TextEditingController();
+TextEditingController article_panier= TextEditingController();
 int? etat=1;
+
 
 
 class Ventes extends StatefulWidget {
@@ -125,7 +129,8 @@ class _VentesState extends State<Ventes> {
 
             SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
             Container(
-              height: MediaQuery.of(context).size.height *0.7,
+
+              height: MediaQuery.of(context).size.height *0.77,
                 child:  VentesList(),
             ),
           ],
@@ -154,7 +159,7 @@ class _VentesState extends State<Ventes> {
           "prix_up":prix_up.text.toString(),
 
           "etat_article":etat.toString(),
-          "categorie":categorie.text.toString(),
+          "categorie":article_panier.text.toString(),
         }
     );
 
@@ -171,187 +176,159 @@ class _VentesState extends State<Ventes> {
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 18),
-                                onPressed: () {
-                                  setState(() {
-                                    showUpperContainer = false;
-                                    Navigator.pop(context);
-                                  });
-                                },
-                                icon: const Icon(Icons.cancel_rounded,color: Color.fromRGBO(11, 6, 65, 1),)
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 10,),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                width: MediaQuery.of(context).size.width * 0.23,
-                                height: 50,
-                                child: TextFormField(
-                                  controller: nom_client,
-                                  validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Champ vide";
-                                    }
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  maxLines: 1,
-                                  minLines: 1,
-                                  decoration: new InputDecoration(
-                                    hintText: "Nom du client : ",
+                    child:Row(
+                      children:<Widget> [
+                        Expanded(
+                            child: Column(
+                              children:<Widget> [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: nom_client,
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return "Champ vide";
+                                      }
+                                    },
+                                    keyboardType: TextInputType.name,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: new InputDecoration(
+                                      hintText: "Nom du client : ",
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                width: MediaQuery.of(context).size.width * 0.203,
-                                height: 50,
-                                child: TextFormField(
-                                  controller:categorie ,
-                                  validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Champ vide";
-                                    }
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  maxLines: 1,
-                                  minLines: 1,
-                                  decoration: new InputDecoration(
-                                    hintText: "categorie : ",
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: prenom_client,
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return "Champ vide";
+                                      }
+                                    },
+                                    keyboardType: TextInputType.name,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: new InputDecoration(
+                                      hintText: "prenom du client : ",
+                                    ),
                                   ),
                                 ),
-                              ),
-
-                            ]),
-                        const SizedBox(height: 12,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                              width: MediaQuery.of(context).size.width * 0.23,
-                              height: 50,
-                              child: TextFormField(
-                                controller: prix_up,
-                                validator: (value){
-                                  if(value!.isEmpty){
-                                    return "Champ vide";
-                                  }
-                                },
-                                keyboardType: TextInputType.name,
-                                maxLines: 1,
-                                minLines: 1,
-                                decoration: new InputDecoration(
-                                  hintText: "Prix UP : ",
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: num,
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return "Champ vide";
+                                      }
+                                    },
+                                    keyboardType: TextInputType.name,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: new InputDecoration(
+                                      hintText: "Tel du client : ",
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            ToggleSwitch(
-                              minWidth: 50.0,
-                              cornerRadius: 5.0,
-                              activeBgColors: [
-                                [Colors.red[800]!],
-                                [Colors.green[800]!]
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: remise,
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return "Champ vide";
+                                      }
+                                    },
+                                    keyboardType: TextInputType.name,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: new InputDecoration(
+                                      hintText: "Remise : ",
+                                    ),
+                                  ),
+                                ),
 
                               ],
-                              activeFgColor: Colors.white,
-                              inactiveBgColor: Colors.grey,
-                              inactiveFgColor: Colors.white,
-                              initialLabelIndex: 1,
-                              totalSwitches: 2,
-                              labels: ['Desa', 'Acti'],
-                              radiusStyle: true,
-                              onToggle: (index) {
-                                print('switched to: $index');
-                                etat = index;
-                                print('etat ==  $etat');
-                              },
-                            ),
-                          ],
+                            )
                         ),
-                        const SizedBox(height: 12,),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                          width: MediaQuery.of(context).size.width * 0.23,
-                          height: 50,
-                          child: TextFormField(
-                            controller: prenom_client,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return "Champ vide";
-                              }
-                            },
-                            keyboardType: TextInputType.name,
-                            maxLines: 1,
-                            minLines: 1,
-                            decoration: new InputDecoration(
-                              hintText: "prenom : ",
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 15,),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                          width: MediaQuery.of(context).size.width * 0.23,
-                          height: 50,
-                          child: TextFormField(
-                            controller: num,
-                            validator: (value){
-                              if(value!.isEmpty){
-                                return "Champ vide";
-                              }
-                            },
-                            keyboardType: TextInputType.name,
-                            maxLines: 1,
-                            minLines: 1,
-                            decoration: new InputDecoration(
-                              hintText: "tel : ",
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 35,),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  sending = true;
-                                  addData();
-                                  showUpperContainer = false;
-                                  nom_client.clear();
-                                  prix_up.clear();
-                                  prenom_client.clear();
-                                  categorie.clear();
-                                  etat=1;
-
-                                  num.clear();
-                                });
-                              },
-                              child: new Text(
-                                "Enregistre",
-                                style: TextStyle(color: Colors.white),
-                              ),
-
-                            ),
-                            const SizedBox(height: 15,),
-                          ],
+                        Expanded(
+                            child: Column(
+                              children:<Widget> [
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child:
+                                  TypeAheadField(
+                                    textFieldConfiguration: TextFieldConfiguration(
+                                      autofillHints: ["AutoFillHints 1", "AutoFillHints 2"],
+                                      autofocus: true,
+                                      style: DefaultTextStyle.of(context)
+                                          .style
+                                          .copyWith(fontStyle: FontStyle.italic),
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: 'What are you looking for?'),
+                                    ),
+                                    suggestionsCallback: (pattern) async {
+                                      return await BackendService.getSuggestions(pattern);
+                                    },
+                                    itemBuilder: (context, Map<String, String> suggestion) {
+                                      return ListTile(
+                                        leading: Icon(Icons.shopping_cart),
+                                        title: Text(suggestion['name']!),
+                                        subtitle: Text('\$${suggestion['price']}'),
+                                      );
+                                    },
+                                    itemSeparatorBuilder: (context, index) {
+                                      return Divider();
+                                    },
+                                    onSuggestionSelected: (Map<String, String> suggestion) {
+                                    //  Navigator.of(context).push<void>(MaterialPageRoute(
+                                       //   builder: (context) => ProductPage(product: suggestion)));
+                                    },
+                                    suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      elevation: 8.0,
+                                      color: Theme.of(context).cardColor,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                  width: MediaQuery.of(context).size.width * 0.23,
+                                  height: 50,
+                                  child: TextFormField(
+                                    controller: nom_client,
+                                    validator: (value){
+                                      if(value!.isEmpty){
+                                        return "Champ vide";
+                                      }
+                                    },
+                                    keyboardType: TextInputType.name,
+                                    maxLines: 1,
+                                    minLines: 1,
+                                    decoration: new InputDecoration(
+                                      hintText: "selection article : ",
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                         )
                       ],
                     ),
-                  )
+                  ),
 
             ) );
           });
@@ -378,4 +355,16 @@ Widget Imprespsion(reload)
       TextButton(onPressed: (){}, child: Text("vent récent")),
     ],
   );
+}
+class BackendService {
+  static Future<List<Map<String, String>>> getSuggestions(String query) async {
+    await Future<void>.delayed(Duration(seconds: 1));
+
+    return List.generate(3, (index) {
+      return {
+        'name': query + index.toString(),
+        'price': Random().nextInt(100).toString()
+      };
+    });
+  }
 }

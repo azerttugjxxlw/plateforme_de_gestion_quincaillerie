@@ -17,8 +17,8 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
-  Future<List<dynamic>>getArticle() async{
-    final response = await http.get(Uri.parse(API.listarticleapi));
+  Future<List<dynamic>>getClient() async{
+    final response = await http.get(Uri.parse(API.listclientapi));
     var list = json.decode(response.body);
 
 
@@ -28,7 +28,7 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
   @override
   void initState() {
     // TODO: implement initState
-    getArticle();
+    getClient();
   }
 
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
           child: loadReservations());
     });
   }
-  reservationList(data,dataLength){
+  clientList(data,dataLength){
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -97,10 +97,10 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
                               241, 234, 227, 1); //make tha magic!
                         }),
                         cells: [
-                          DataCell(Text(data[i]['id_article'].toString())),
-                          DataCell(Text(data[i]['Nom_article'].toString())),
-                          DataCell(Text(data[i]['etat_article'].toString())),
-                          DataCell(Text(data[i]['prix_up'].toString())),
+                          DataCell(Text(data[i]['id_client'].toString())),
+                          DataCell(Text(data[i]['nom_client'].toString())),
+                          DataCell(Text(data[i]['prenom_client'].toString())),
+                          DataCell(Text(data[i]['num'].toString())),
                         ]
                     )
 
@@ -118,11 +118,11 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
       stream: _timerStream,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
         return FutureBuilder<List<dynamic>>(
-          future: getArticle(),
+          future: getClient(),
           builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               int dataLength = snapshot.data!.length;
-              return reservationList(snapshot.data, dataLength);
+              return clientList(snapshot.data, dataLength);
             } else if (snapshot.hasError) {
               return Text('Une erreur s\'est produite.');
             } else {

@@ -24,87 +24,76 @@ class _ClientState extends State<Client> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Column(
+      body:Column(
+    children:<Widget> [
+    Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height *0.09,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black45, offset: Offset(1, 1), blurRadius: 1)
+        ],
+        color: const Color.fromRGBO(241, 234, 227, 1),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height *0.09,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black45, offset: Offset(1, 1), blurRadius: 1)
-              ],
-              color: const Color.fromRGBO(241, 234, 227, 1),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Client",
+              style: GoogleFonts.josefinSans(
+                  textStyle: TextStyle(
+                    fontSize: 24,
+                    color: Color.fromRGBO(11, 6, 65, 1),
+                  )),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Client",
-                    style: GoogleFonts.josefinSans(
-                        textStyle: TextStyle(
-                      fontSize: 24,
-                      color: Color.fromRGBO(11, 6, 65, 1),
-                    )),
-                  ),
-                ),
-                Row(
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8, vertical: 16),
+                child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 16),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 200,
-                            child: const TextField(
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Recherche',
-                                  fillColor: Colors.white),
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.search),
-                          )
-                        ],
+                    Container(
+                      width: 200,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Recherche',
+                            fillColor: Colors.white),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        icon: Icon(Icons.add_box_rounded),
-                        onPressed: () {
-                          setState(() {
-                           // currentPage = FormulaireReservationClient();
-                            Navigator.pop(context);
-                          //  Navigator.push(context, MaterialPageRoute(builder: (context)=>DesktopBody()));
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color.fromRGBO(241, 234, 227, 1),
-                          backgroundColor: const Color.fromRGBO(11, 6, 65, 1),
-                        ),
-                        label: Text("Nouvelle"),
-                      ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.search),
                     )
                   ],
                 ),
-              ],
-            ),
+              ),
+
+            ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
-        //  const DateScreen(),
-          Impression(reload),
-          SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
-          ClientList(),
         ],
       ),
+    ),const SizedBox(height: 20,),
+    Container(
+    child: Impression(reload),
+    ),
+
+
+    //  const DateScreen(),
+
+    SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
+    Container(
+      height: MediaQuery.of(context).size.height *0.12,
+    child:  ClientList(),
+    ),
+    ],
+    ),
+
     );
   }
 }
