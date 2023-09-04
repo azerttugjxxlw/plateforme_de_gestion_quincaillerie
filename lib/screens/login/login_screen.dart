@@ -69,7 +69,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
           });
           //save the data returned from server
           //and navigate to home page
-          String uid = jsondata["uid"];
+          uid = jsondata["uid"];
+          nomemp= jsondata["address"];
           String fullname = jsondata["fullname"];
           String address = jsondata["address"];
           print(fullname);
@@ -77,14 +78,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
         }else{
           showprogress = false; //don't show progress indicator
           error = true;
-          errormsg = "Something went wrong.";
+          errormsg = "Quelque chose s'est mal passé.";
         }
       }
     }else{
       setState(() {
         showprogress = false; //don't show progress indicator
         error = true;
-        errormsg = "Error during connecting to server.";
+        errormsg = "Erreur connexion serveur";
       });
     }
   }
@@ -112,7 +113,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
 
     return  Scaffold(
       backgroundColor: Colors.blueGrey[50],
-      body: Stack(
+      body:SingleChildScrollView(scrollDirection: Axis.vertical,child: Stack(
+
         fit: StackFit.loose,
         children: <Widget>[
           Row(
@@ -157,7 +159,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             ],
           ),
         ],
-      ),
+      ),),
     );
   }
 /////////////////////////////////////////////////////////////////////////////
@@ -199,7 +201,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 style: TextStyle(color:Colors.white, fontSize:20),
                 obscureText: true,
                 decoration: myInputDecoration(
-                  label: "Password",
+                  label: "Mot de Passe",
                   icon: Icons.lock,
                 ),
                 onChanged: (value){
@@ -211,8 +213,8 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             ),
 
             Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.only(top:20),
+              padding: EdgeInsets.all(5),
+              margin: EdgeInsets.only(top:10),
               child: SizedBox(
                 height: 60, width: double.infinity,
                 child:ElevatedButton(
@@ -233,12 +235,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   ),
                   child: showprogress?
                   SizedBox(
-                    height:10, width:30,
+                    height:8, width:30,
                     child: CircularProgressIndicator(
                       backgroundColor: Colors.white,
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
                     ),
-                  ):Text("LOGIN NOW", style: TextStyle(fontSize: 20),),
+                  ):Text("CONNECTE", style: TextStyle(fontSize: 20),),
                 ),
               ),
             ),

@@ -3,24 +3,27 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
-import '../../api_connection/api_connection.dart';
-import '../../core/constants/color_constants.dart';
+import '../../../api_connection/api_connection.dart';
+import '../../../core/constants/color_constants.dart';
 
 
-class VentesList extends StatefulWidget {
+
+
+class EmployerList extends StatefulWidget {
   @override
-  _VentesListState createState() => _VentesListState();
+  _EmployerListState createState() => _EmployerListState();
 }
-class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
+class _EmployerListState extends State<EmployerList>with TickerProviderStateMixin {
   late AnimationController _controller;
+LinkedScrollControllerGroup controllerGroup =LinkedScrollControllerGroup();
 
+ScrollController? headerScrollController;
+ScrollController? dataScrollController;
    @override
    Future<List<dynamic>>getArticle() async{
-    final response = await http.get(Uri.parse(API.listfactureapi));
+    final response = await http.get(Uri.parse(API.listemploiyeapi));
     var list = json.decode(response.body);
 
 
@@ -31,6 +34,8 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     getArticle();
+     headerScrollController = controllerGroup.addAndGet();
+      dataScrollController= controllerGroup.addAndGet();
   }
 
   Widget build(BuildContext context) {
@@ -54,6 +59,9 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                       .of(context)
                       .size
                       .width * 0.091,
+
+
+
                   columns: [
                     DataColumn(
                       label: Text(
@@ -71,7 +79,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "Date",
+                        "Prenom",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -79,64 +87,34 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "Prix T",
+                        "Post",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
                       ),
                     ),
-                    DataColumn(
-                      label: Text(
-                        "TVA",
-                        style: columnTextStyle,
-                        overflow: TextOverflow.visible,
-                        softWrap: true,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Remise",
-                        style: columnTextStyle,
-                        overflow: TextOverflow.visible,
-                        softWrap: true,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Bon ",
-                        style: columnTextStyle,
-                        overflow: TextOverflow.visible,
-                        softWrap: true,
-                      ),
-                    ),
+
 
                   ],
-                  rows:[
-                    for(int i = 0; i < dataLength; i++)
-
-                       DataRow(
-
-
-                          color: MaterialStateColor.resolveWith((states) {
-                            //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
-                            return const Color.fromRGBO(
-                                241, 234, 227, 1); //make tha magic!
-                          }),
+                  rows:List<DataRow>.generate(
+                      dataLength,
+                          (i) => DataRow( color: MaterialStateColor.resolveWith((states) {
+                        //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
+                        return const Color.fromRGBO(
+                            241, 234, 227, 1); //make tha magic!
+                      }),
                           cells: [
-                            DataCell(Text(data[i]['id_facture'].toString())),
-                            DataCell(Text(data[i]['nom_client'].toString())),
-                            DataCell(Text(data[i]['date_facture'].toString())),
-                            DataCell(Text(data[i]['prix'].toString())),
-                            DataCell(Text(data[i]['tva'].toString())),
-                            DataCell(Text(data[i]['remise_facture'].toString())),
-                            DataCell(Text(data[i]['bon'].toString())),
+                            DataCell(Text(data[i]['id_employe'].toString())),
+                            DataCell(Text(data[i]['nom_employe'].toString())),
+                            DataCell(Text(data[i]['prenom_employe'].toString())),
+                            DataCell(Text(data[i]['post'].toString())),
 
-                          ]
-                      ),
-                  ]
+                          ]))
+
               ), )
     );
   }
+
   Stream<int> _timerStream = Stream.periodic(Duration(seconds: 3), (i) => i);
   StreamBuilder<int> loadReservations() {
     return StreamBuilder<int>(
@@ -149,7 +127,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
               int dataLength = snapshot.data!.length;
               return reservationList(snapshot.data, dataLength);
             } else if (snapshot.hasError) {
-              return Text('Une erreur s\'est produite.');
+              return Text('vide.');
             } else {
               return LinearProgressIndicator();
             }

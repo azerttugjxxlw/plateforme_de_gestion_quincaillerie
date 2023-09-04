@@ -3,24 +3,27 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
-import '../../api_connection/api_connection.dart';
-import '../../core/constants/color_constants.dart';
+import '../../../api_connection/api_connection.dart';
+import '../../../core/constants/color_constants.dart';
 
 
-class VentesList extends StatefulWidget {
+
+
+class FourniseurList extends StatefulWidget {
   @override
-  _VentesListState createState() => _VentesListState();
+  _FourniseurListState createState() => _FourniseurListState();
 }
-class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
+class _FourniseurListState extends State<FourniseurList>with TickerProviderStateMixin {
   late AnimationController _controller;
+LinkedScrollControllerGroup controllerGroup =LinkedScrollControllerGroup();
 
+ScrollController? headerScrollController;
+ScrollController? dataScrollController;
    @override
    Future<List<dynamic>>getArticle() async{
-    final response = await http.get(Uri.parse(API.listfactureapi));
+    final response = await http.get(Uri.parse(API.listfourniseurapi));
     var list = json.decode(response.body);
 
 
@@ -31,6 +34,8 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
   void initState() {
     // TODO: implement initState
     getArticle();
+     headerScrollController = controllerGroup.addAndGet();
+      dataScrollController= controllerGroup.addAndGet();
   }
 
   Widget build(BuildContext context) {
@@ -54,6 +59,9 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                       .of(context)
                       .size
                       .width * 0.091,
+
+
+
                   columns: [
                     DataColumn(
                       label: Text(
@@ -71,7 +79,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "Date",
+                        "Prenom",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -79,7 +87,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "Prix T",
+                        "Tel",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -87,7 +95,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "TVA",
+                        "Article",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -95,15 +103,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
                     DataColumn(
                       label: Text(
-                        "Remise",
-                        style: columnTextStyle,
-                        overflow: TextOverflow.visible,
-                        softWrap: true,
-                      ),
-                    ),
-                    DataColumn(
-                      label: Text(
-                        "Bon ",
+                        "",
                         style: columnTextStyle,
                         overflow: TextOverflow.visible,
                         softWrap: true,
@@ -111,32 +111,45 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
                     ),
 
                   ],
-                  rows:[
-                    for(int i = 0; i < dataLength; i++)
-
-                       DataRow(
-
-
-                          color: MaterialStateColor.resolveWith((states) {
-                            //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
-                            return const Color.fromRGBO(
-                                241, 234, 227, 1); //make tha magic!
-                          }),
+                  rows:List<DataRow>.generate(
+                      dataLength,
+                          (i) => DataRow( color: MaterialStateColor.resolveWith((states) {
+                        //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
+                        return const Color.fromRGBO(
+                            241, 234, 227, 1); //make tha magic!
+                      }),
                           cells: [
-                            DataCell(Text(data[i]['id_facture'].toString())),
-                            DataCell(Text(data[i]['nom_client'].toString())),
-                            DataCell(Text(data[i]['date_facture'].toString())),
-                            DataCell(Text(data[i]['prix'].toString())),
-                            DataCell(Text(data[i]['tva'].toString())),
-                            DataCell(Text(data[i]['remise_facture'].toString())),
-                            DataCell(Text(data[i]['bon'].toString())),
+                            DataCell(Text(data[i]['id_fourniseur'].toString())),
+                            DataCell(Text(data[i]['nom_fourniseur'].toString())),
+                            DataCell(Text(data[i]['prenom_fourniseur'].toString())),
+                            DataCell(Text(data[i]['numero_fourniseur'].toString())),
+                            DataCell(Text(data[i]['article_fourni'].toString())),
+                            DataCell(ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Color.fromRGBO(
+                                      241, 234, 227, 1), //background color of button
+                               //border width and color
+                                  elevation: 0, //elevation of button
+                                  shape: RoundedRectangleBorder( //to set border radius to button
+                                      borderRadius: BorderRadius.circular(30)
+                                  ),
+                                  padding: EdgeInsets.all(20) //content padding inside button
+                              ),
+                              onPressed: () {
+                                setState(() {
 
-                          ]
-                      ),
-                  ]
+
+                                });
+                              },
+                              child: new Icon(Icons.delete,color:Colors.red,),
+
+                            ),),
+                          ]))
+
               ), )
     );
   }
+
   Stream<int> _timerStream = Stream.periodic(Duration(seconds: 3), (i) => i);
   StreamBuilder<int> loadReservations() {
     return StreamBuilder<int>(
@@ -149,7 +162,7 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
               int dataLength = snapshot.data!.length;
               return reservationList(snapshot.data, dataLength);
             } else if (snapshot.hasError) {
-              return Text('Une erreur s\'est produite.');
+              return Text('vide.');
             } else {
               return LinearProgressIndicator();
             }

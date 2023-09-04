@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 
 class ArticleModel {
+  bool selected=false;
+
   String? id_article;
   String? Nom_article;
   late Bool etat_article;

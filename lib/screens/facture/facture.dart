@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plateforme_de_gestion_quincaillerie/screens/facture/ventefacture_list.dart';
 
 import '../../core/constants/color_constants.dart';
 
@@ -72,24 +73,7 @@ class _FactureState extends State<Facture> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ElevatedButton.icon(
-                        icon: Icon(Icons.add_box_rounded),
-                        onPressed: () {
-                          setState(() {
-                           // currentPage = FormulaireReservationClient();
-                            Navigator.pop(context);
-                          //  Navigator.push(context, MaterialPageRoute(builder: (context)=>DesktopBody()));
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color.fromRGBO(241, 234, 227, 1),
-                          backgroundColor: const Color.fromRGBO(11, 6, 65, 1),
-                        ),
-                        label: Text("Nouvelle"),
-                      ),
-                    )
+
                   ],
                 ),
               ],
@@ -101,7 +85,12 @@ class _FactureState extends State<Facture> {
         //  const DateScreen(),
           Impression(reload),
           SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
-         // FactureList(),
+          Container(
+
+              height: MediaQuery.of(context).size.height *0.77,
+              child:ventefacture_list(),
+          ),
+
         ],
       ),
     );
@@ -112,8 +101,6 @@ Widget Impression(reload)
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      IconButton(onPressed: (){}, icon: Icon(Icons.add)),
-      IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
       IconButton(onPressed: (){},icon: Icon(Icons.print),),
       IconButton(onPressed: (){},icon: Icon(Icons.document_scanner_sharp),),
       IconButton(onPressed: (){

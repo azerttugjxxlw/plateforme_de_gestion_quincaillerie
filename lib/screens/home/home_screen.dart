@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:plateforme_de_gestion_quincaillerie/screens/parametre/employer/employer.dart';
+import 'package:plateforme_de_gestion_quincaillerie/screens/parametre/fourniseur/fourniseur.dart';
 
 import '../../core/constants/color_constants.dart';
 import '../../responsive.dart';
 import '../client/client.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../facture/facture.dart';
+import '../parametre/parametre.dart';
 import '../stock/stock.dart';
 import '../ventes/vente.dart';
 
@@ -15,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreen createState() => _HomeScreen();
 }
-enum Gender { client, Tableaudebore, Ventes, Facture, Stock, Parametres}
+enum Gender { client, Tableaudebore, Ventes, Facture, Stock, Employe, Fournisseur, Parametres}
 class _HomeScreen extends State<HomeScreen> {
 
 
@@ -44,9 +47,7 @@ class _HomeScreen extends State<HomeScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  height: defaultPadding * 3,
-                                ),
+
                                 Image.asset(
                                   "assets/images/logo.png",
                                   scale: 7,
@@ -70,10 +71,11 @@ class _HomeScreen extends State<HomeScreen> {
                           onPress: () {
                             setState(() {
                               selectedGender = Gender.Tableaudebore;
-                              currentPage = DashboardScreen();
+                              currentPage = (nomemp == 'admin'? DashboardScreen() : null)!;
                             });
                           },
                         ),
+
                         DrawerListTile(
                           cardchild: ListTile(
                               leading:ImageIcon(AssetImage("assets/icon/ventes.png"),color:selectedGender== Gender.Ventes? secondaryColor : kdashdcolor,),
@@ -139,22 +141,37 @@ class _HomeScreen extends State<HomeScreen> {
                             });
                           },
                         ),
-
                         DrawerListTile(
-                          color: selectedGender == Gender.Parametres
+                          color: selectedGender == Gender.Employe
                               ? kdashdcolor
                               : kTranspColor,
                           onPress: () {
                             setState(() {
-                              selectedGender = Gender.Parametres;
-                              // currentPage = Parametre();
+                              selectedGender = Gender.Employe;
+                              currentPage = (nomemp == 'admin'? Employer(): null)!;
                             });},
                           cardchild: ListTile(
-                              leading:ImageIcon(AssetImage("assets/icon/parametre.png"),color:selectedGender== Gender.Parametres? secondaryColor : kdashdcolor,),
-                              title:Text( "Paramètres",style:selectedGender== Gender.client? drawaTextStyle
+                              leading:ImageIcon(AssetImage("assets/icon/icons8-employé-100.png"),color:selectedGender== Gender.Employe? secondaryColor : kdashdcolor,),
+                              title:Text( "Employé",style:selectedGender== Gender.Employe? drawaTextStyle
                                   : dashdTextStyle,)
                           ),
                         ),
+                        DrawerListTile(
+                          color: selectedGender == Gender.Fournisseur
+                              ? kdashdcolor
+                              : kTranspColor,
+                          onPress: () {
+                            setState(() {
+                              selectedGender = Gender.Fournisseur;
+                              currentPage = (nomemp == 'admin'? Fourniseur() : null)!;
+                            });},
+                          cardchild: ListTile(
+                              leading:ImageIcon(AssetImage("assets/icon/icons8-fournisseur-64.png"),color:selectedGender== Gender.Fournisseur? secondaryColor : kdashdcolor,),
+                              title:Text( "Fournissuer",style:selectedGender== Gender.Fournisseur? drawaTextStyle
+                                  : dashdTextStyle,)
+                          ),
+                        ),
+
                       ],
                     ),
                   ),

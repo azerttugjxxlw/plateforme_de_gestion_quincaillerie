@@ -88,7 +88,7 @@ class _ClientState extends State<Client> {
 
     SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
     Container(
-      height: MediaQuery.of(context).size.height *0.12,
+      height: MediaQuery.of(context).size.height *0.7,
     child:  ClientList(),
     ),
     ],

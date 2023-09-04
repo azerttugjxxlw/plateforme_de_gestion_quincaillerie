@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 
 import '../../api_connection/api_connection.dart';
@@ -15,7 +16,10 @@ class ArticleList extends StatefulWidget {
 }
 class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin {
   late AnimationController _controller;
+LinkedScrollControllerGroup controllerGroup =LinkedScrollControllerGroup();
 
+ScrollController? headerScrollController;
+ScrollController? dataScrollController;
    @override
    Future<List<dynamic>>getArticle() async{
     final response = await http.get(Uri.parse(API.listarticleapi));
@@ -29,6 +33,8 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
   void initState() {
     // TODO: implement initState
     getArticle();
+     headerScrollController = controllerGroup.addAndGet();
+      dataScrollController= controllerGroup.addAndGet();
   }
 
   Widget build(BuildContext context) {
@@ -52,6 +58,9 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                       .of(context)
                       .size
                       .width * 0.091,
+
+
+
                   columns: [
                     DataColumn(
                       label: Text(
@@ -109,17 +118,13 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                     ),
 
                   ],
-                  rows:[
-                    for(int i = 0; i < dataLength; i++)
-
-                       DataRow(
-
-
-                          color: MaterialStateColor.resolveWith((states) {
-                            //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
-                            return const Color.fromRGBO(
-                                241, 234, 227, 1); //make tha magic!
-                          }),
+                  rows:List<DataRow>.generate(
+                      dataLength,
+                          (i) => DataRow( color: MaterialStateColor.resolveWith((states) {
+                        //total = data[i]['nb_nuit'] * data[i]['cout']*1.0;
+                        return const Color.fromRGBO(
+                            241, 234, 227, 1); //make tha magic!
+                      }),
                           cells: [
                             DataCell(Text(data[i]['id_article'].toString())),
                             DataCell(Text(data[i]['Nom_article'].toString())),
@@ -129,12 +134,12 @@ class _ArticleListState extends State<ArticleList>with TickerProviderStateMixin 
                             DataCell(Text(data[i]['description'].toString())),
                             DataCell(Text(data[i]['categorie'].toString())),
 
-                          ]
-                      ),
-                  ]
+                          ]))
+
               ), )
     );
   }
+
   Stream<int> _timerStream = Stream.periodic(Duration(seconds: 3), (i) => i);
   StreamBuilder<int> loadReservations() {
     return StreamBuilder<int>(

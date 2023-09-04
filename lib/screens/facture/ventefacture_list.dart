@@ -3,24 +3,22 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
-import 'package:pdf/widgets.dart' as pw;
+
 
 import '../../api_connection/api_connection.dart';
 import '../../core/constants/color_constants.dart';
 
 
-class VentesList extends StatefulWidget {
+class ventefacture_list extends StatefulWidget {
   @override
-  _VentesListState createState() => _VentesListState();
+  _ventefacture_listState createState() => _ventefacture_listState();
 }
-class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
+class _ventefacture_listState extends State<ventefacture_list>with TickerProviderStateMixin {
   late AnimationController _controller;
 
    @override
    Future<List<dynamic>>getArticle() async{
-    final response = await http.get(Uri.parse(API.listfactureapi));
+    final response = await http.get(Uri.parse(API.listventefactureapi));
     var list = json.decode(response.body);
 
 

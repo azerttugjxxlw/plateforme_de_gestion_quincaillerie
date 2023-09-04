@@ -8,30 +8,29 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../api_connection/api_connection.dart';
-import '../../core/constants/color_constants.dart';
-import 'article_list.dart';
+import '../../../api_connection/api_connection.dart';
+import '../../../core/constants/color_constants.dart';
+import 'employer_list.dart';
 
 
 
 
-String selectedValue = "B1";
-TextEditingController designation = TextEditingController();
-TextEditingController prix_up  = TextEditingController();
-TextEditingController quantite = TextEditingController();
-TextEditingController description = TextEditingController();
-TextEditingController categorie= TextEditingController();
+
+TextEditingController nom_employe  = TextEditingController();
+TextEditingController prenom_employe = TextEditingController();
+TextEditingController mot_de_passe = TextEditingController();
+TextEditingController poste= TextEditingController();
 int? etat=1;
 
 
-class Stock extends StatefulWidget {
-  const Stock({Key? key}) : super(key: key);
+class Employer extends StatefulWidget {
+  const Employer({Key? key}) : super(key: key);
 
   @override
-  State<Stock> createState() => _StockState();
+  State<Employer> createState() => _EmployerState();
 }
 
-class _StockState extends State<Stock> {
+class _EmployerState extends State<Employer> {
   late bool error, sending, success;
   late String msg;
 
@@ -39,7 +38,7 @@ class _StockState extends State<Stock> {
   @override
   void reload(){
     setState(() {
-        currentPage = Stock();
+        currentPage = Employer();
     });
   }
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class _StockState extends State<Stock> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Stock",
+                      "Employe",
                       style: GoogleFonts.josefinSans(
                           textStyle: TextStyle(
                             fontSize: 24,
@@ -102,7 +101,7 @@ class _StockState extends State<Stock> {
                             setState(() {
                               form();
                               showUpperContainer = true;
-
+                              print("action sur le button");
                             });
 
                           },
@@ -122,7 +121,7 @@ class _StockState extends State<Stock> {
               child:Column(
                 children: [
                   Imprespsion(reload),
-                 // tableHeader()
+                  //tableHeader()
                 ],
               )
             ),
@@ -132,8 +131,8 @@ class _StockState extends State<Stock> {
 
             SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
             Container(
-              height: MediaQuery.of(context).size.height *0.7,
-                child:  ArticleList(),
+              height: MediaQuery.of(context).size.height *0.4,
+                child:  EmployerList(),
             ),
           ],
         ),
@@ -153,14 +152,13 @@ class _StockState extends State<Stock> {
   }
 
  void addData()  {
-   var resp =  http.post(Uri.parse(API.addarticleapi),
+   var resp =  http.post(Uri.parse(API.addemploiyeapi),
         body: {
-          "Nom_article":designation.text.toString(),
-          "prix_up":prix_up.text.toString(),
-          "qteStock":quantite.text.toString(),
-          " description":description.text.toString(),
-          "etat_article":etat.toString(),
-          "categorie":categorie.text.toString(),
+          "nom_employe":nom_employe.text.toString(),
+          "prenom_employe":prenom_employe.text.toString(),
+          " mot_de_passe":mot_de_passe.text.toString(),
+          "poste":poste.text.toString(),
+
         }
     );
 
@@ -200,31 +198,13 @@ class _StockState extends State<Stock> {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                width: MediaQuery.of(context).size.width * 0.23,
-                                height: 50,
-                                child: TextFormField(
-                                  controller: designation,
-                                  validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Champ vide";
-                                    }
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  maxLines: 1,
-                                  minLines: 1,
-                                  decoration: new InputDecoration(
-                                    hintText: "Designation : ",
-                                  ),
-                                ),
-                              ),
+
                               Container(
                                 padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                                 width: MediaQuery.of(context).size.width * 0.203,
                                 height: 50,
                                 child: TextFormField(
-                                  controller:categorie ,
+                                  controller:poste ,
                                   validator: (value){
                                     if(value!.isEmpty){
                                       return "Champ vide";
@@ -234,7 +214,7 @@ class _StockState extends State<Stock> {
                                   maxLines: 1,
                                   minLines: 1,
                                   decoration: new InputDecoration(
-                                    hintText: "categorie : ",
+                                    hintText: "poste : ",
                                   ),
                                 ),
                               ),
@@ -249,7 +229,7 @@ class _StockState extends State<Stock> {
                               width: MediaQuery.of(context).size.width * 0.23,
                               height: 50,
                               child: TextFormField(
-                                controller: prix_up,
+                                controller: nom_employe,
                                 validator: (value){
                                   if(value!.isEmpty){
                                     return "Champ vide";
@@ -259,7 +239,7 @@ class _StockState extends State<Stock> {
                                 maxLines: 1,
                                 minLines: 1,
                                 decoration: new InputDecoration(
-                                  hintText: "Prix UP : ",
+                                  hintText: "Nom : ",
                                 ),
                               ),
                             ),
@@ -292,7 +272,7 @@ class _StockState extends State<Stock> {
                           width: MediaQuery.of(context).size.width * 0.23,
                           height: 50,
                           child: TextFormField(
-                            controller: quantite,
+                            controller: prenom_employe,
                             validator: (value){
                               if(value!.isEmpty){
                                 return "Champ vide";
@@ -302,7 +282,7 @@ class _StockState extends State<Stock> {
                             maxLines: 1,
                             minLines: 1,
                             decoration: new InputDecoration(
-                              hintText: "Quantité : ",
+                              hintText: "Prenom : ",
                             ),
                           ),
                         ),
@@ -312,7 +292,7 @@ class _StockState extends State<Stock> {
                           width: MediaQuery.of(context).size.width * 0.23,
                           height: 50,
                           child: TextFormField(
-                            controller: description,
+                            controller: mot_de_passe,
                             validator: (value){
                               if(value!.isEmpty){
                                 return "Champ vide";
@@ -322,11 +302,11 @@ class _StockState extends State<Stock> {
                             maxLines: 1,
                             minLines: 1,
                             decoration: new InputDecoration(
-                              hintText: "Description : ",
+                              hintText: "Mot de pass : ",
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5,),
+                        const SizedBox(height: 15,),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -346,13 +326,10 @@ class _StockState extends State<Stock> {
                                   sending = true;
                                   addData();
                                   showUpperContainer = false;
-                                  designation.clear();
-                                  prix_up.clear();
-                                  quantite.clear();
-                                  categorie.clear();
-                                  etat=1;
-                                  quantite.clear();
-                                  description.clear();
+                                  nom_employe.clear();
+                                  prenom_employe.clear();
+                                  mot_de_passe.clear();
+                                  poste.clear();
                                 });
                               },
                               child: new Text(

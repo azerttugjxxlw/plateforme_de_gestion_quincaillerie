@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/constants/color_constants.dart';
 import '../../../responsive.dart';
-
+DateTime now = DateTime.now();
+var formattedDate = DateFormat('yyyy-MM-dd').format(now);
 class Header extends StatelessWidget {
   const Header({
     Key? key,
@@ -102,7 +104,7 @@ class DateCard extends StatelessWidget {
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-              child: Text("19/03/2023", style: dashdTextStyle,),
+              child: Text("${formattedDate} :${uid}", style: dashdTextStyle,),
             ),
           Icon(Icons.keyboard_arrow_down),
         ],

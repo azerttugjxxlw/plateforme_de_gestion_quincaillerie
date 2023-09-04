@@ -92,3 +92,42 @@ class InputWidget extends StatelessWidget {
     );
   }
 }
+
+class BottonContainer extends StatelessWidget {
+  final String text;
+  final VoidCallback? onTap;
+
+  BottonContainer({required this.text, required this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 1),
+              blurRadius: 5,
+              color: Colors.black.withOpacity(0.3),
+            ),
+          ],
+        ),
+
+       // color:Colors.red ,
+      ///  margin: EdgeInsets.only(top: 10.0),
+        height: 50,
+        width: 150,
+       // height: kbottomContainerHeight,
+        padding: EdgeInsets.only(bottom: 15.0),
+        child: Center(
+          child: Text(
+            text,
+            //style: klargeBottomButtonTextStyle,
+          ),
+        ),
+      ),
+    );
+  }
+}

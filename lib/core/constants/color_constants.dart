@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../screens/dashboard/dashboard_screen.dart';
+import '../../screens/parametre/employer/employer.dart';
 
 
 const primaryColor = Color(0xFFCDDDFF);
@@ -14,6 +15,13 @@ final drawaTextStyle = TextStyle(color: Color(0xFF05011E),fontSize: 16);
 final dashdTextaStyle = TextStyle(color: Colors.black,fontSize: 16);
 final columnTextStyle = GoogleFonts.josefinSans(textStyle: TextStyle(color: Colors.white));
 Widget currentPage = DashboardScreen();
+Widget currentPage2 = Employer();
+String? uid;
+String? nomemp;
+bool _showFormm = false;
+
+
+
 //const bgColor = Color(0xFF212132);
 const kelementdashColor = Color(0xFFF1EAE3);
 const kPrimaryColor = Color(0xFF035AA6);
@@ -33,7 +41,7 @@ const bgColor = Color(0xFF212121);
 const darkgreenColor = Color(0xFF2c614f);
 const greenColor = Color(0xFF6bab58);
 
-const defaultPadding = 16.0;
+const defaultPadding = 15.0;
 const double defaultBorderRadius = 15;
 
 class ColorConstants {

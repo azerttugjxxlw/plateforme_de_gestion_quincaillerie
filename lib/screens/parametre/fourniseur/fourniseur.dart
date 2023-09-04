@@ -8,30 +8,29 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../api_connection/api_connection.dart';
-import '../../core/constants/color_constants.dart';
-import 'article_list.dart';
+import '../../../api_connection/api_connection.dart';
+import '../../../core/constants/color_constants.dart';
+import 'fourniseur_list.dart';
 
 
 
 
-String selectedValue = "B1";
-TextEditingController designation = TextEditingController();
-TextEditingController prix_up  = TextEditingController();
-TextEditingController quantite = TextEditingController();
-TextEditingController description = TextEditingController();
-TextEditingController categorie= TextEditingController();
+
+TextEditingController nom_fourniseur  = TextEditingController();
+TextEditingController prenom_fourniseur = TextEditingController();
+TextEditingController numero_fourniseur = TextEditingController();
+TextEditingController article = TextEditingController();
 int? etat=1;
 
 
-class Stock extends StatefulWidget {
-  const Stock({Key? key}) : super(key: key);
+class Fourniseur extends StatefulWidget {
+  const Fourniseur({Key? key}) : super(key: key);
 
   @override
-  State<Stock> createState() => _StockState();
+  State<Fourniseur> createState() => _FourniseurState();
 }
 
-class _StockState extends State<Stock> {
+class _FourniseurState extends State<Fourniseur> {
   late bool error, sending, success;
   late String msg;
 
@@ -39,7 +38,7 @@ class _StockState extends State<Stock> {
   @override
   void reload(){
     setState(() {
-        currentPage = Stock();
+        currentPage = Fourniseur();
     });
   }
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class _StockState extends State<Stock> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Stock",
+                      "Fourniseur",
                       style: GoogleFonts.josefinSans(
                           textStyle: TextStyle(
                             fontSize: 24,
@@ -102,7 +101,7 @@ class _StockState extends State<Stock> {
                             setState(() {
                               form();
                               showUpperContainer = true;
-
+                              print("action sur le button");
                             });
 
                           },
@@ -122,7 +121,7 @@ class _StockState extends State<Stock> {
               child:Column(
                 children: [
                   Imprespsion(reload),
-                 // tableHeader()
+                  //tableHeader()
                 ],
               )
             ),
@@ -132,8 +131,8 @@ class _StockState extends State<Stock> {
 
             SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
             Container(
-              height: MediaQuery.of(context).size.height *0.7,
-                child:  ArticleList(),
+              height: MediaQuery.of(context).size.height *0.4,
+                child:  FourniseurList(),
             ),
           ],
         ),
@@ -153,14 +152,12 @@ class _StockState extends State<Stock> {
   }
 
  void addData()  {
-   var resp =  http.post(Uri.parse(API.addarticleapi),
+   var resp =  http.post(Uri.parse(API.addfourniseurapi),
         body: {
-          "Nom_article":designation.text.toString(),
-          "prix_up":prix_up.text.toString(),
-          "qteStock":quantite.text.toString(),
-          " description":description.text.toString(),
-          "etat_article":etat.toString(),
-          "categorie":categorie.text.toString(),
+          "nom_fourniseur":nom_fourniseur.text.toString(),
+          "prenom_fourniseur":prenom_fourniseur.text.toString(),
+          "num_fourniseur":numero_fourniseur.text.toString(),
+          "article":article.text.toString(),
         }
     );
 
@@ -196,50 +193,6 @@ class _StockState extends State<Stock> {
                           ],
                         ),
 
-                        const SizedBox(height: 10,),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                width: MediaQuery.of(context).size.width * 0.23,
-                                height: 50,
-                                child: TextFormField(
-                                  controller: designation,
-                                  validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Champ vide";
-                                    }
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  maxLines: 1,
-                                  minLines: 1,
-                                  decoration: new InputDecoration(
-                                    hintText: "Designation : ",
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                width: MediaQuery.of(context).size.width * 0.203,
-                                height: 50,
-                                child: TextFormField(
-                                  controller:categorie ,
-                                  validator: (value){
-                                    if(value!.isEmpty){
-                                      return "Champ vide";
-                                    }
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  maxLines: 1,
-                                  minLines: 1,
-                                  decoration: new InputDecoration(
-                                    hintText: "categorie : ",
-                                  ),
-                                ),
-                              ),
-
-                            ]),
                         const SizedBox(height: 12,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +202,7 @@ class _StockState extends State<Stock> {
                               width: MediaQuery.of(context).size.width * 0.23,
                               height: 50,
                               child: TextFormField(
-                                controller: prix_up,
+                                controller: nom_fourniseur,
                                 validator: (value){
                                   if(value!.isEmpty){
                                     return "Champ vide";
@@ -259,7 +212,7 @@ class _StockState extends State<Stock> {
                                 maxLines: 1,
                                 minLines: 1,
                                 decoration: new InputDecoration(
-                                  hintText: "Prix UP : ",
+                                  hintText: "Nom : ",
                                 ),
                               ),
                             ),
@@ -292,7 +245,7 @@ class _StockState extends State<Stock> {
                           width: MediaQuery.of(context).size.width * 0.23,
                           height: 50,
                           child: TextFormField(
-                            controller: quantite,
+                            controller: prenom_fourniseur,
                             validator: (value){
                               if(value!.isEmpty){
                                 return "Champ vide";
@@ -302,7 +255,7 @@ class _StockState extends State<Stock> {
                             maxLines: 1,
                             minLines: 1,
                             decoration: new InputDecoration(
-                              hintText: "Quantité : ",
+                              hintText: "Prenom : ",
                             ),
                           ),
                         ),
@@ -312,7 +265,7 @@ class _StockState extends State<Stock> {
                           width: MediaQuery.of(context).size.width * 0.23,
                           height: 50,
                           child: TextFormField(
-                            controller: description,
+                            controller: article,
                             validator: (value){
                               if(value!.isEmpty){
                                 return "Champ vide";
@@ -322,11 +275,31 @@ class _StockState extends State<Stock> {
                             maxLines: 1,
                             minLines: 1,
                             decoration: new InputDecoration(
-                              hintText: "Description : ",
+                              hintText: "Article: ",
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5,),
+                        const SizedBox(height: 15,),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                          width: MediaQuery.of(context).size.width * 0.23,
+                          height: 50,
+                          child: TextFormField(
+                            controller: numero_fourniseur,
+                            validator: (value){
+                              if(value!.isEmpty){
+                                return "Champ vide";
+                              }
+                            },
+                            keyboardType: TextInputType.number,
+                            maxLines: 1,
+                            minLines: 1,
+                            decoration: new InputDecoration(
+                              hintText: "Tel: ",
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15,),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -345,14 +318,12 @@ class _StockState extends State<Stock> {
                                 setState(() {
                                   sending = true;
                                   addData();
+                                  print('envoier');
                                   showUpperContainer = false;
-                                  designation.clear();
-                                  prix_up.clear();
-                                  quantite.clear();
-                                  categorie.clear();
-                                  etat=1;
-                                  quantite.clear();
-                                  description.clear();
+                                  nom_fourniseur.clear();
+                                  prenom_fourniseur.clear();
+                                  numero_fourniseur.clear();
+                                  article.clear();
                                 });
                               },
                               child: new Text(
