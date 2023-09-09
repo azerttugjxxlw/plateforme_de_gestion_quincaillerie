@@ -340,6 +340,7 @@ class _formulaireState extends State<formulaire> {
       currentPage = formulaire();
     });
   }
+
   Future<void> sendData() async {
     final url = Uri.parse('http://127.0.0.1/api_pdgquincaillerie_store/teste3.php');
     for (var item in _cartItems) {
@@ -386,49 +387,7 @@ class _formulaireState extends State<formulaire> {
     }
   }
 
-  void addData()  {
-   /*
-    for (var item in _cartItems) {
-      int index = _cartItems.indexOf(item);
-
-
-      if(item.quantity > 0){
-      //  productList.add(item);
-
-
-         qt_article= item.quantity;
-         CE_article = item.id_article;
-        productList.add({'nom': CE_article, 'quantite': qt_article});
-      } }*/
-         var resp =  http.post(Uri.parse(API.addvent),
-
-             body: {
-               //client
-               "nom_client":nom_client.text.toString(),
-               "prenom_client":prenom_client.text.toString(),
-               "num":num.text.toString(),
-               //facture
-               "date_facture":date_facture.toString(),
-               "prix":prix.toString(),
-               "tva":tva.toString(),
-               "remise_facture":remise_facture.text.toString(),
-               "bon":bon.toString(),
-               "idetr_employe": idetr_employe.toString(),
-               //panier
-               "panier": productList.toString(),
-              // "CE_article":CE_article.toString(),
-              // "qt_article":qt_article.toString(),
-              // 'productList': _cartItems.toString(),
-
-
-             }
-         );
-    print("php debut");
-print(productList);
-    print("php fin");
-  //  print("liste3"); print(productList3); print("liste3");
-  }
-  //void addProduct() {}
+  // void addProduct() {}
 
   Widget build(BuildContext context) {
     prix=_calculateTotal();
@@ -666,28 +625,6 @@ print(productList);
 
                           ),
                           ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: kTiroirColor, //background color of button
-                                side: BorderSide(width:3, color:Colors.brown), //border width and color
-                                elevation: 3, //elevation of button
-                                shape: RoundedRectangleBorder( //to set border radius to button
-                                    borderRadius: BorderRadius.circular(30)
-                                ),
-                                padding: EdgeInsets.all(20) //content padding inside button
-                            ),
-                            onPressed: () {
-                              setState(() {
-
-                                sending = true;
-                              });
-                            },
-                            child: new Text(
-                              "Valider Panier",
-                              style: TextStyle(color: Colors.white),
-                            ),
-
-                          ),
-                          ElevatedButton(
     style: ElevatedButton.styleFrom(
     primary: kTiroirColor, //background color of button
     side: BorderSide(width:3, color:Colors.brown), //border width and color
@@ -704,7 +641,6 @@ print(productList);
                                 sending = true;
 
                                 sendData();
-
                                 //showUpperContainer = false;
                                 nom_client.clear();
                                 prenom_client.clear();

@@ -5,6 +5,8 @@ class API{
   //list article
   static const listarticleapi = "$hostConnect/article/liste_article.php";
   //add article
+  static const miseajourarticle  = "$hostConnect/article/updateniveauarticle.php";
+
   static const addarticleapi = "$hostConnect/article/add_article.php";
   //liste facture
   static const listfactureapi = "$hostConnect/vente/liste_vente.php";
@@ -19,6 +21,9 @@ class API{
   static const addemploiyeapi = "$hostConnect/employer/addemployer.php";
   static const listfourniseurapi = "$hostConnect/fourniseur/listfourniseur.php";
   static const addfourniseurapi = "$hostConnect/fourniseur/addfourniseur.php";
+  static const suppfourniseurapi = "$hostConnect/fourniseur/suppfourniseur.php";
+
+
 
 }
 

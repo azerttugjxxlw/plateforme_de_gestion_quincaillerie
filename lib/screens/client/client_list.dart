@@ -13,7 +13,7 @@ class ClientList extends StatefulWidget {
   @override
   _ClientListState createState() => _ClientListState();
 }
-class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
+class _ClientListState extends State<ClientList>with TickerProviderStateMixin{
   late AnimationController _controller;
 
   @override
@@ -38,9 +38,7 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
     });
   }
   clientList(data,dataLength){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+    return
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child:SingleChildScrollView(
@@ -57,21 +55,13 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
                 columns: [
                   DataColumn(
                     label: Text(
-                      "ID",
+                      "   ID   ",
                       style: columnTextStyle,
                     ),
                   ),
                   DataColumn(
                     label: Text(
-                      "Nom",
-                      style: columnTextStyle,
-                      overflow: TextOverflow.visible,
-                      softWrap: true,
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Prenom",
+                      "   Nom   ",
                       style: columnTextStyle,
                       overflow: TextOverflow.visible,
                       softWrap: true,
@@ -79,7 +69,15 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
                   ),
                   DataColumn(
                     label: Text(
-                      " nu",
+                      "   Prenom   ",
+                      style: columnTextStyle,
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "   Tel   ",
                       style: columnTextStyle,
                       overflow: TextOverflow.visible,
                       softWrap: true,
@@ -107,10 +105,7 @@ class _ClientListState extends State<ClientList>with TickerProviderStateMixin {
                 ]
             ),
           ),
-        )
-
-      ],
-    );
+        );
   }
   Stream<int> _timerStream = Stream.periodic(Duration(seconds: 3), (i) => i);
   StreamBuilder<int> loadReservations() {

@@ -160,6 +160,29 @@ class _VentesListState extends State<VentesList>with TickerProviderStateMixin {
   }
 
   //////////////////////////////////////////////
+/*
+  form(){
+    return showDialog(
+        context: context, builder: (BuildContext context){
+      return StatefulBuilder(builder: (context, setState){
+        return AlertDialog( content:Container(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.450,
+              height: MediaQuery.of(context).size.height * 0.55,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: ,
+              ),
+            )
 
-
+        ) );
+      });
+    }
+    );
+  }
+  */
 }

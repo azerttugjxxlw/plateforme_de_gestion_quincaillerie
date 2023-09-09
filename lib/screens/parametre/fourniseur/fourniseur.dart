@@ -434,14 +434,9 @@ Widget Imprespsion(reload)
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      IconButton(onPressed: (){}, icon: Icon(Icons.add)),
       IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
       IconButton(onPressed: (){},icon: Icon(Icons.print),),
       IconButton(onPressed: (){},icon: Icon(Icons.document_scanner_sharp),),
-      IconButton(onPressed: (){
-        reload;
-      },icon: Icon(Icons.refresh),),
-      TextButton(onPressed: (){}, child: Text("vent récent")),
     ],
   );
 }

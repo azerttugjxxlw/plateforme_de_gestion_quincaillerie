@@ -87,7 +87,7 @@ class _VentesState extends State<Ventes> {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      "Stock",
+                      "Ventes",
                       style: GoogleFonts.josefinSans(
                           textStyle: TextStyle(
                             fontSize: 24,

@@ -84,11 +84,10 @@ class _ClientState extends State<Client> {
     ),
 
 
-    //  const DateScreen(),
-
+    //  const DateScreen(),3
     SizedBox(width: double.infinity,height: 2,child: Container(color: Colors.black,),),
     Container(
-      height: MediaQuery.of(context).size.height *0.7,
+      height: MediaQuery.of(context).size.height *0.77,
     child:  ClientList(),
     ),
     ],
@@ -106,10 +105,7 @@ Widget Impression(reload)
       IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
       IconButton(onPressed: (){},icon: Icon(Icons.print),),
       IconButton(onPressed: (){},icon: Icon(Icons.document_scanner_sharp),),
-      IconButton(onPressed: (){
-        reload;
-      },icon: Icon(Icons.refresh),),
-      TextButton(onPressed: (){}, child: Text("vent récent")),
+
     ],
   );
 }

@@ -10,12 +10,39 @@ import '../../../core/constants/color_constants.dart';
 
 
 
-
+int id_fournisseur=0;
 class FourniseurList extends StatefulWidget {
   @override
   _FourniseurListState createState() => _FourniseurListState();
 }
 class _FourniseurListState extends State<FourniseurList>with TickerProviderStateMixin {
+
+
+  void deleteClient() async {
+
+
+    final response = await http.delete(
+      Uri.parse(API.suppfourniseurapi),
+      body: {
+        "id_fourniseur": id_fournisseur.toString(),
+      },
+    );
+
+
+  }
+
+  void addData() async {
+    var resp = await http.post(Uri.parse(API.suppfourniseurapi),
+        body: {
+          "id_fournisseur":id_fournisseur.toString(),
+        }
+    );
+    if (resp.statusCode == 200) {
+    } else {
+      // Gérer les erreurs de suppression
+    }
+  }
+
   late AnimationController _controller;
 LinkedScrollControllerGroup controllerGroup =LinkedScrollControllerGroup();
 
@@ -137,9 +164,9 @@ ScrollController? dataScrollController;
                               ),
                               onPressed: () {
                                 setState(() {
-
-
-                                });
+                                  print(id_fournisseur);
+                                  id_fournisseur=data[i]['id_fourniseur'];
+                                  addData();                                });
                               },
                               child: new Icon(Icons.delete,color:Colors.red,),
 
